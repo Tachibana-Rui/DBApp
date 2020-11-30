@@ -1,0 +1,1 @@
+ssh -L 3306:groucho.it.uu.se:3306 -o TCPKeepAlive=yes -o ServerAliveInterval=10 soba8337@beurling.it.uu.se ¨CN
