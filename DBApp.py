@@ -111,6 +111,32 @@ def list_childs(DID):
         disp(mycursor, ['DID', 'Title'])
 
 
+def get_department_link(DID):
+    words = []
+    did = DID
+    while True:
+        query = f'''
+			SELECT
+				ParentDID, Title
+			FROM
+				Department
+			WHERE
+				DID='{did}'
+			'''
+        mycursor.execute(query)
+        pdid, title = mycursor.fetchall()[0]
+        words.append(title)
+        if pdid == None:
+            break
+        did = pdid
+
+    link = ""
+    for i in range(len(words)-1, -1, -1):
+        link += words[i]
+        link += "/"
+    return link[:-1]
+
+
 def get_discount(PID):
     mycursor.execute(
         f"select Discount from Product where PID='{PID}'")
@@ -179,6 +205,7 @@ if __name__ == '__main__':
     mycursor = mydb.cursor()
     print("Connection Successful. Type 'help' for more commands.")
 
+    print(get_department_link('FT1'))
     while True:
         line = input('> ')
         try:
