@@ -108,7 +108,19 @@ def list_childs(DID):
 				ParentDID='{DID}'
 			'''
         mycursor.execute(query)
-        disp(mycursor, ['DID', 'Title'])
+
+        myresult = mycursor.fetchall()
+        tb = pt.PrettyTable()
+        for row in myresult:
+            tb.add_row(row)
+        try:
+            tb.field_names = ['DID', 'Title']
+        except:
+            pass
+        print(tb)
+
+        for did, title in myresult:
+            list_childs(did)
 
 
 def get_discount(PID):
